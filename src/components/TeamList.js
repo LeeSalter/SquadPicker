@@ -74,7 +74,7 @@ class TeamList extends React.Component{
                                 <ul id="selected-players" className="player-list" {...provided.droppableProps} ref={provided.innerRef}>
                                     {this.state.selectedPlayers.map(({id,name,position}, index) => {
                                         return (
-                                            <Draggable key={id+99} draggableId= {id+99} index={index} player={name}>
+                                            <Draggable key={id} draggableId= {id} index={index} player={name}>
                                             {(provided) => (
                                                 <li className='selected-player' key={this.props.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                     <span>{position}</span><span>&nbsp;{name}</span>

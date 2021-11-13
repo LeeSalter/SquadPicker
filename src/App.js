@@ -19,14 +19,23 @@ class App extends React.Component {
 
     console.log(result);
 
+    if(result.destination==null){
+      return;
+    }
+
+    if(result.source.droppableId === result.destination.droppableId){
+      return;
+    }
+
     var selectedPlayers = this.teamList.current.getPlayers();
       if(selectedPlayers.length===11){
         return;
-      }    
+      }  
+      
 
     switch(String(result.source.droppableId)){
       case "goalkeepers-list":
-        var selectedKeeper=initialData.squad.goalkeepers[result.source.index];
+        var selectedKeeper=initialData.squad.goalkeepers[result.source.index];  
         this.teamList.current.addPlayer(selectedKeeper);
         var goalkeepers = document.querySelectorAll('[data-player-position="GK"');
         this.disableSquadList(goalkeepers)
