@@ -5,14 +5,39 @@ class TeamList extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {selectedPlayers: this.props.selectedPlayers};
-
+        this.state = {selectedPlayers: this.props.selectedPlayers,
+                        selectedGoalkeepers: 0,
+                        selectedDefenders: 0,
+                        selectedMidfielders: 0,
+                        selectedForwards: 0};
     }
 
     addPlayer = (player) => {
+        console.log(player);
         this.setState(prevState => ({
             selectedPlayers: [...prevState.selectedPlayers, player].sort(function(a,b){return a.id - b.id})
         }))
+        
+        switch(player.position){
+            case "GK":
+                console.log("incrementing goalkeepers");
+                this.setState(prevState => ({selectedGoalkeepers: prevState.selectedGoalkeepers + 1}));
+                break;
+            case "DEF":
+                console.log("incrementing defenders")
+                this.setState(prevState => ({selectedDefenders: prevState.selectedDefenders + 1}));
+                break;
+            case "MID":
+                console.log("incrementing midfielders")
+                this.setState(prevState => ({selectedMidfielders: prevState.selectedMidfielders + 1}));
+                break;
+            case "FWD":
+                console.log("incrementing forwards")
+                this.setState(prevState => ({selectedForwards: prevState.selectedForwards + 1}));
+                break;
+            default:
+                break;
+        }
     }
 
     removePlayer = (index)=>{
@@ -20,18 +45,22 @@ class TeamList extends React.Component{
         var playerToRemove=players[index];
         switch(playerToRemove.position){
             case "GK":
+                this.setState(prevState => ({selectedGoalkeeprs: prevState.selectedGoalkeeprs--}));
                 var goalkeepers = document.querySelectorAll('[data-player-position="GK"');
                 this.enableSquadList(goalkeepers);
                 break;
             case "DEF":
+                this.setState(prevState => ({selectedDefenders: prevState.selectedDefenders++}));
                 var defenders = document.querySelectorAll('[data-player-position="DEF"');
                 this.enableSquadList(defenders);
                 break;
             case "MID":
+                this.setState(prevState => ({selectedMidfielders: prevState.selectedMidfielders++}));
                 var midfielders = document.querySelectorAll('[data-player-position="MID"');
                 this.enableSquadList(midfielders);
                 break;
             case "FWD":
+                this.setState(prevState => ({selectedForwards: prevState.selectedForwards++}));
                 var forwards = document.querySelectorAll('[data-player-position="FWD"');
                 this.enableSquadList(forwards);
                 break;

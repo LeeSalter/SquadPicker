@@ -1,11 +1,12 @@
 import playerThumb from '../assets/squad-player.png';
 
 const initialData = {
-    formations:{
-        '4-4-2': {Name:'4-4-2', Goalkeepers:1, Defenders:4, Midfielders:4, Forwards:2},
-        '5-3-2': {Name: '5-3-2', Goalkeepers:1, Defenders:5, Midfielders:3, Forwards:2},
-        '5-4-1': {Name: '5-4-1', Goalkeepers:1, Defenders:5, Midfielders:4, Forwards:1}
-    },
+    formations:[
+        {Id: 0, Name: '4-4-2', Goalkeepers:1, Defenders:4, Midfielders:4, Forwards:2},
+        {Id: 1, Name: '5-3-2', Goalkeepers:1, Defenders:5, Midfielders:3, Forwards:2},
+        {Id: 2, Name: '5-4-1', Goalkeepers:1, Defenders:5, Midfielders:4, Forwards:1},
+        {Id: 3, Name: '4-3-3', Goalkeepers:1, Defenders:4, Midfielders:3, Forwards:3}
+    ],
     squad:{
         goalkeepers:[
             {id:'1', name:'Dino Zoff', position:"GK", thumb:playerThumb},

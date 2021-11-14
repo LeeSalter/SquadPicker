@@ -6,6 +6,7 @@ import SquadList from './components/SquadList';
 import TeamList from './components/TeamList';
 import initialData from './components/InitialData';
 import React from 'react';
+import FormationPicker from './components/FormationPicker';
 
 class App extends React.Component {
   constructor(props){
@@ -13,6 +14,7 @@ class App extends React.Component {
     this.selectedPlayers=[];
     this.teamList = React.createRef();
     this.squadList= React.createRef();
+    this.formationPicker = React.createRef();
   }
   
   handleOnDragEnd = (result) => {
@@ -31,7 +33,24 @@ class App extends React.Component {
       if(selectedPlayers.length===11){
         return;
       }  
-      
+    
+      let selectedFormation = this.formationPicker.current.getFormation();
+      switch(selectedFormation.Name){
+        case "4-4-2":
+          console.log("442 in play");
+          break;
+        case "5-3-2":
+          console.log("532 in play");
+          break;
+        case "5-4-1":
+          console.log("541 in play");
+          break;
+        case "4-4-3":
+          console.log("443 in play");
+          break;
+        default:
+          break;
+      }
 
     switch(String(result.source.droppableId)){
       case "goalkeepers-list":
@@ -42,21 +61,30 @@ class App extends React.Component {
       break;
       case "defenders-list":
         var selectedDefender=initialData.squad.defenders[result.source.index];
-        this.teamList.current.addPlayer(selectedDefender);
-        var defenders = document.querySelectorAll('[data-player-position="DEF"');
-        this.disableSquadList(defenders)
+        this.teamList.current.addPlayer(selectedDefender);        
+        let selectedDefenders=selectedPlayers.filter(player=>player.position==="DEF").length+1;
+        if(selectedFormation.Defenders===selectedDefenders){
+          var defenders = document.querySelectorAll('[data-player-position="DEF"');
+          this.disableSquadList(defenders)
+        }
       break;
       case "midfielders-list":
         var selectedMidfielder=initialData.squad.midfielders[result.source.index];
         this.teamList.current.addPlayer(selectedMidfielder);
-        var midfielders = document.querySelectorAll('[data-player-position="MID"');
-        this.disableSquadList(midfielders)
+        let selectedMidfielders=selectedPlayers.filter(player=>player.position==="MID").length+1;
+        if(selectedFormation.Midfielders===selectedMidfielders){
+          var midfielders = document.querySelectorAll('[data-player-position="MID"');
+          this.disableSquadList(midfielders)
+        }
       break;
       case "forwards-list":
         var selectedForward=initialData.squad.forwards[result.source.index];
         this.teamList.current.addPlayer(selectedForward);
-        var forwards = document.querySelectorAll('[data-player-position="FWD"');
-        this.disableSquadList(forwards)
+        let selectedForwards=selectedPlayers.filter(player=>player.position==="FWD").length+1;
+        if(selectedFormation.Forwards===selectedForwards){
+          var forwards = document.querySelectorAll('[data-player-position="FWD"');
+          this.disableSquadList(forwards)
+        }
       break;
       case "selected-player-list":
         var playerIndex = result.source.index;
@@ -80,6 +108,7 @@ disableSquadList = (elements) => {
         <DragDropContext onDragEnd={this.handleOnDragEnd}>
           <TeamList ref={this.teamList} selectedPlayers={this.selectedPlayers} /> 
           <Pitch />
+          <FormationPicker ref={this.formationPicker} />
           <SquadList ref={this.squadList}/>
           </DragDropContext>
       </div>
